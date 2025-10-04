@@ -1,53 +1,142 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthProvider } from "./contexts/AuthContext";
+import { Toaster } from "sonner";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Import pages
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
+import Expenses from "./pages/Expenses";
+import ExpenseDetail from "./pages/ExpenseDetail";
+import ExpenseForm from "./pages/ExpenseForm";
+import ManagerApprovals from "./pages/ManagerApprovals";
+import UserManagement from "./pages/UserManagement";
+import ApprovalRules from "./pages/ApprovalRules";
+import CompanySettings from "./pages/CompanySettings";
+import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+// Import components
+import ProtectedRoute from "./components/ProtectedRoute";
+import Layout from "./components/Layout";
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
+import "./App.css";
 
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <BrowserRouter>
+          <div className="App">
+            <Routes>
+              {/* Public routes */}
+              <Route path="/" element={<Landing />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              
+              {/* Protected routes */}
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <Layout>
+                    <Dashboard />
+                  </Layout>
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/expenses" element={
+                <ProtectedRoute>
+                  <Layout>
+                    <Expenses />
+                  </Layout>
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/expenses/new" element={
+                <ProtectedRoute>
+                  <Layout>
+                    <ExpenseForm />
+                  </Layout>
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/expenses/:id/edit" element={
+                <ProtectedRoute>
+                  <Layout>
+                    <ExpenseForm />
+                  </Layout>
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/expenses/:id" element={
+                <ProtectedRoute>
+                  <Layout>
+                    <ExpenseDetail />
+                  </Layout>
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/manager/approvals" element={
+                <ProtectedRoute requiredRole="MANAGER">
+                  <Layout>
+                    <ManagerApprovals />
+                  </Layout>
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/admin/users" element={
+                <ProtectedRoute requiredRole="ADMIN">
+                  <Layout>
+                    <UserManagement />
+                  </Layout>
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/admin/approval-rules" element={
+                <ProtectedRoute requiredRole="ADMIN">
+                  <Layout>
+                    <ApprovalRules />
+                  </Layout>
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/admin/settings" element={
+                <ProtectedRoute requiredRole="ADMIN">
+                  <Layout>
+                    <CompanySettings />
+                  </Layout>
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/profile" element={
+                <ProtectedRoute>
+                  <Layout>
+                    <Profile />
+                  </Layout>
+                </ProtectedRoute>
+              } />
+              
+              {/* Catch all route */}
+              <Route path="/404" element={<NotFound />} />
+              <Route path="*" element={<Navigate to="/404" replace />} />
+            </Routes>
+            <Toaster position="top-right" />
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 
