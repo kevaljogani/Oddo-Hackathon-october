@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id              String    @id @default(uuid())
+  name            String
+  email           String    @unique
+  password        String
+  role            String    @default("EMPLOYEE")
+  companyId       String
+  isManagerApprover Boolean  @default(false)
+  managerId       String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  company         Company   @relation(fields: [companyId], references: [id])
+  manager         User?     @relation("UserToManager", fields: [managerId], references: [id])
+  subordinates    User[]    @relation("UserToManager")
+  expenses        Expense[]
+  approvals       Expense[] @relation("ExpenseApprover")
+
+  @@index([companyId])
+  @@index([managerId])
+}
+
+model Company {
+  id              String    @id @default(uuid())
+  name            String
+  settings        String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  users           User[]
+  expenses        Expense[]
+  approvalRules   ApprovalRule[]
+}
+
+model Expense {
+  id                String    @id @default(uuid())
+  title             String
+  description       String?
+  date              DateTime
+  category          String
+  originalAmount    Float
+  originalCurrency  String
+  convertedAmount   Float
+  exchangeRate      Float
+  status            String @default("DRAFT")
+  userId            String
+  companyId         String
+  currentApproverId String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  user              User      @relation(fields: [userId], references: [id])
+  company           Company   @relation(fields: [companyId], references: [id])
+  currentApprover   User?     @relation("ExpenseApprover", fields: [currentApproverId], references: [id])
+  attachments       Attachment[]
+  lines             ExpenseLine[]
+  approvalHistory   ApprovalHistory[]
+
+  @@index([userId])
+  @@index([companyId])
+  @@index([currentApproverId])
+}
+
+model ExpenseLine {
+  id          String    @id @default(uuid())
+  description String
+  amount      Float
+  expenseId   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  expense     Expense   @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+
+  @@index([expenseId])
+}
+
+model Attachment {
+  id          String    @id @default(uuid())
+  filename    String
+  url         String
+  type        String?
+  size        Int?
+  expenseId   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  expense     Expense   @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+
+  @@index([expenseId])
+}
+
+model ApprovalHistory {
+  id          String    @id @default(uuid())
+  expenseId   String
+  approverId  String
+  decision    String
+  comment     String?
+  createdAt   DateTime  @default(now())
+
+  expense     Expense   @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+
+  @@index([expenseId])
+}
+
+model ApprovalRule {
+  id          String    @id @default(uuid())
+  name        String
+  conditions  String
+  approvers   String
+  companyId   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  company     Company   @relation(fields: [companyId], references: [id])
+
+  @@index([companyId])
+}
+
+// Enums converted to strings for SQLite compatibility
