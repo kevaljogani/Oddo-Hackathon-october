@@ -186,11 +186,59 @@ const Login = () => {
 
             {/* Demo credentials */}
             <div className="mt-6 p-4 bg-white/5 rounded-lg border border-white/10">
-              <p className="text-xs text-slate-400 mb-2 font-medium">Demo Credentials:</p>
-              <div className="space-y-1 text-xs text-slate-300">
-                <div>Admin: admin@company.com / admin123</div>
-                <div>Manager: manager@company.com / manager123</div>
-                <div>Employee: employee@company.com / employee123</div>
+              <p className="text-xs text-slate-400 mb-2 font-medium">Quick Demo Login:</p>
+              <div className="space-y-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="w-full justify-start text-left border-white/20 text-white hover:bg-white/10"
+                  onClick={() => {
+                    setFormData(prev => ({
+                      ...prev,
+                      role: 'ADMIN',
+                      email: 'admin@company.com',
+                      password: 'admin123'
+                    }));
+                  }}
+                >
+                  <User className="h-3 w-3 mr-2" />
+                  Login as Admin
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="w-full justify-start text-left border-white/20 text-white hover:bg-white/10"
+                  onClick={() => {
+                    setFormData(prev => ({
+                      ...prev,
+                      role: 'MANAGER',
+                      email: 'manager@company.com',
+                      password: 'manager123'
+                    }));
+                  }}
+                >
+                  <User className="h-3 w-3 mr-2" />
+                  Login as Manager
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="w-full justify-start text-left border-white/20 text-white hover:bg-white/10"
+                  onClick={() => {
+                    setFormData(prev => ({
+                      ...prev,
+                      role: 'EMPLOYEE',
+                      email: 'employee@company.com',
+                      password: 'employee123'
+                    }));
+                  }}
+                >
+                  <User className="h-3 w-3 mr-2" />
+                  Login as Employee
+                </Button>
               </div>
             </div>
           </CardContent>
