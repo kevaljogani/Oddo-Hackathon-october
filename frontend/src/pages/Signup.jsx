@@ -22,7 +22,8 @@ const Signup = () => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'EMPLOYEE'
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
