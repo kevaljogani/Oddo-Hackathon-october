@@ -1,70 +1,138 @@
-# Getting Started with Create React App
+# ExpenseFlow - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive expense management frontend built with React, Tailwind CSS, and shadcn/ui components.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+### Core Functionality
+- **Multi-role Authentication** - Admin, Manager, Employee roles with different permissions
+- **Expense Management** - Create, edit, submit expenses with multi-line items
+- **Approval Workflows** - Sequential and parallel approval processes
+- **File Upload & OCR** - Receipt scanning with automatic data extraction
+- **Real-time Notifications** - Toast notifications and badge counters
+- **Responsive Design** - Mobile-first design that works on all devices
 
-### `npm start`
+### User Roles & Capabilities
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### Employee
+- Create and submit expenses
+- Upload receipts with OCR scanning
+- Track approval status
+- View expense history
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Manager  
+- All employee capabilities
+- Approve/reject team expenses
+- View team expense analytics
+- Bulk approval actions
 
-### `npm test`
+#### Admin
+- All manager capabilities
+- User management (CRUD)
+- Approval rules configuration
+- Company settings management
+- System administration
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🛠️ Tech Stack
 
-### `npm run build`
+- **React 19** - Latest React with functional components and hooks
+- **React Router v6** - Client-side routing
+- **TanStack Query** - Server state management and caching
+- **Axios** - HTTP client with interceptors
+- **Tailwind CSS** - Utility-first CSS framework
+- **Shadcn/ui** - Modern UI component library
+- **Lucide React** - Beautiful icon set
+- **Sonner** - Toast notifications
+- **React Hook Form** - Form management and validation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🎨 Design Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Visual Design
+- **Modern Dark Theme** - Elegant dark color scheme with blue/emerald accents
+- **Smooth Animations** - Reactbits.dev animation patterns throughout
+- **Glass Morphism** - Subtle backdrop blur effects
+- **Micro-interactions** - Hover states, button animations, loading states
+- **Gradient Accents** - Tasteful use of gradients for CTAs and highlights
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🔧 Installation & Setup
 
-### `npm run eject`
+### Prerequisites
+- Node.js 18+ 
+- Yarn package manager
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Install Dependencies
+```bash
+cd frontend
+yarn install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Environment Setup
+```bash
+# Copy environment template
+cp .env.example .env
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Configure backend URL
+REACT_APP_BACKEND_URL=http://localhost:8001
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Development Server
+```bash
+yarn start
+```
+App will be available at `http://localhost:3000`
 
-## Learn More
+### Build for Production
+```bash
+yarn build
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🧪 Demo Credentials
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The app includes demo users for testing all roles:
 
-### Code Splitting
+**Admin User**
+- Email: `admin@company.com`
+- Password: `admin123`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Manager User**  
+- Email: `manager@company.com`
+- Password: `manager123`
 
-### Analyzing the Bundle Size
+**Employee User**
+- Email: `employee@company.com`  
+- Password: `employee123`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 📱 Key Pages
 
-### Making a Progressive Web App
+- **Landing** (`/`) - Marketing homepage with animated hero
+- **Authentication** (`/login`, `/signup`) - Secure login and multi-step signup
+- **Dashboard** (`/dashboard`) - Role-specific overview with statistics
+- **Expenses** (`/expenses/*`) - Full expense management workflow
+- **Approvals** (`/manager/approvals`) - Manager approval queue
+- **Admin** (`/admin/*`) - User management, rules, and settings
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🔌 Backend Integration
 
-### Advanced Configuration
+### Current State
+- ✅ **Frontend**: Complete and production-ready
+- ✅ **Mock Data**: Fully functional with realistic data
+- 🔄 **Backend**: Ready for integration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+See `/app/contracts.md` for detailed API contracts and integration plan.
 
-### Deployment
+## 🚀 Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Build for Production
+```bash
+yarn build
+```
 
-### `npm run build` fails to minify
+### Environment Variables
+```env
+NODE_ENV=production
+REACT_APP_BACKEND_URL=https://api.yourcompany.com
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+**Note**: This frontend is production-ready with mock data and ready for backend API integration.
