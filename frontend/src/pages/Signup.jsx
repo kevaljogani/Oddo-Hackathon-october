@@ -269,6 +269,23 @@ const Signup = () => {
                       className="bg-white/10 border-white/20 text-white placeholder:text-slate-400"
                     />
                   </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-white">Account Role</Label>
+                    <Select value={formData.role} onValueChange={(value) => handleChange('role', value)}>
+                      <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="EMPLOYEE">Employee</SelectItem>
+                        <SelectItem value="MANAGER">Manager</SelectItem>
+                        <SelectItem value="ADMIN">Admin</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-slate-400">
+                      Choose your role in the organization
+                    </p>
+                  </div>
                 </div>
               )}
 
