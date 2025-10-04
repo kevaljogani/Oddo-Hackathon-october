@@ -35,12 +35,17 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (email, password, selectedRole = null) => {
     try {
       setLoading(true);
       
-      // Mock login - find user by email and password
-      const foundUser = mockUsers.find(u => u.email === email && u.password === password);
+      // Mock login - find user by email, password, and optionally role
+      let foundUser = mockUsers.find(u => u.email === email && u.password === password);
+      
+      // If no user found by email/password, try to find by role for demo purposes
+      if (!foundUser && selectedRole) {
+        foundUser = mockUsers.find(u => u.role === selectedRole);
+      }
       
       if (!foundUser) {
         throw new Error('Invalid credentials');
