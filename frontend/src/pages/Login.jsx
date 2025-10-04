@@ -92,6 +92,23 @@ const Login = () => {
               )}
 
               <div className="space-y-2">
+                <Label htmlFor="role" className="text-white flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  Sign in as
+                </Label>
+                <Select value={formData.role} onValueChange={(value) => handleChange({ target: { name: 'role', value } })}>
+                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ADMIN">Admin User</SelectItem>
+                    <SelectItem value="MANAGER">Manager</SelectItem>
+                    <SelectItem value="EMPLOYEE">Employee</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
                 <Label htmlFor="email" className="text-white">Email</Label>
                 <Input
                   id="email"
