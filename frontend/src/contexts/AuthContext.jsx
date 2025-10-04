@@ -90,9 +90,9 @@ export const AuthProvider = ({ children }) => {
         id: `user-${Date.now()}`,
         name: userData.name,
         email: userData.email,
-        role: 'EMPLOYEE',
+        role: userData.role || 'EMPLOYEE',
         companyId: userData.companyId || `company-${Date.now()}`,
-        isManagerApprover: false,
+        isManagerApprover: ['ADMIN', 'MANAGER'].includes(userData.role || 'EMPLOYEE'),
         managerId: null
       };
       
