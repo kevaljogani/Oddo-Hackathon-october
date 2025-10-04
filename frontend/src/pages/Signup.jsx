@@ -314,6 +314,10 @@ const Signup = () => {
                       <span className="text-white font-medium">{formData.name}</span>
                     </div>
                     <div className="flex justify-between">
+                      <span className="text-slate-300">Role:</span>
+                      <span className="text-white font-medium">{formData.role}</span>
+                    </div>
+                    <div className="flex justify-between">
                       <span className="text-slate-300">Email:</span>
                       <span className="text-white font-medium">{formData.email}</span>
                     </div>
