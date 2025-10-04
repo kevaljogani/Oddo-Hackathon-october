@@ -17,6 +17,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    role: 'EMPLOYEE',
     rememberMe: false
   });
   const [showPassword, setShowPassword] = useState(false);
